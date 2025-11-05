@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const PersonSchema = new mongoose.Schema(
+const AboutSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -11,10 +11,12 @@ const PersonSchema = new mongoose.Schema(
 
         },
         imageUrl: {
-            type: String,
-            required: true,
+            type: String,  // cloudinary url
+            public_id: { type: String },
+            url: { type: String },
+            required: true
         },
-        links: {
+        SocialLinks: {
             type: [String],
             required: true,
         },
@@ -25,12 +27,19 @@ const PersonSchema = new mongoose.Schema(
         knowsAbout: {
             type: [String],
             required: true,
+        },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Admin",
+            unique:true,
+            required: true,
         }
+
     },
     { timestamps: true }
 )
 
-const Person = mongoose.model("Person", PersonSchema)
+const About = mongoose.model("About", AboutSchema)
 
 
-export default Person
+export default About

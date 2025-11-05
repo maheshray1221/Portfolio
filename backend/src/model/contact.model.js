@@ -19,6 +19,11 @@ const ContactSchema = new mongoose.Schema(
             required: true,
             minlength: [5, "message must be at least 5 chacters long"],
             maxlength: [200, "message can't exceed 200 charcters"]
+        },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Admin",
+            required: true,
         }
     },
     { timestamps: true }

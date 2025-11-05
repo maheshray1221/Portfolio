@@ -3,8 +3,13 @@ import mongoose from "mongoose"
 const SkillSchema = new mongoose.Schema(
     {
         skill: {
-            type:[String],
-            required:true
+            type: [String],
+            required: true
+        },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Admin",
+            required: true,
         }
     },
     { timestamps: true }

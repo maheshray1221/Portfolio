@@ -2,31 +2,42 @@ import mongoose from "mongoose"
 
 const ProjectSchema = new mongoose.Schema(
     {
-        title:{
+        title: {
             type: String,
             required: true,
         },
-        description:{
+        description: {
             type: String,
             required: true,
         },
-        videoUrl:{
+        videoUrl: {
             type: String,
             required: true,
         },
-        technologies:{
+        technologies: {
             type: String,
             required: true,
         },
-        links:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"Person"
+        githubLink: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        ProjectLink: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Admin",
+            required: true,
         }
     },
     { timestamps: true }
 )
 
-const Project = mongoose.model("Project",ProjectSchema)
+const Project = mongoose.model("Project", ProjectSchema)
 
 
 export default Project

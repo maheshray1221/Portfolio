@@ -12,6 +12,11 @@ const ExperienceSchema = new mongoose.Schema(
         },
         imageUrl: {
             type: String,
+        },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Admin",
+            required: true,
         }
     },
     { timestamps: true }
