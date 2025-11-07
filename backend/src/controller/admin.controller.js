@@ -194,21 +194,16 @@ const updateAbout = asyncHandler(async (req, res) => {
     ) {
         throw new ApiError(401, "all fields are required")
     }
-    // const imageLocalPath = req.file?.path
 
-    // if (!imageLocalPath) {
-    //     throw new ApiError(400,"imageUrl not found")
-    // }
-    // const profileImage = await uploadOnCloudinary(imageLocalPath)
+    const imageLocalPath = req.file?.path
 
-    // if (!profileImage) {
-    //     throw new ApiError(400,"error while upload on cloudinary ")
-    // }
+    if (!imageLocalPath) {
+        throw new ApiError(400, "imagelocalPath are required")
+    }
+    const profileImage = await uploadOnCloudinary(imageLocalPath)
 
-    const about = await About.findById(id)
-
-    if (!about) {
-        throw new ApiError(401, "About not found")
+    if (!profileImage) {
+        throw new ApiError(400, "error while upload on cloudinary ")
     }
 
     const newAbout = await About.findByIdAndUpdate(id, {
@@ -216,10 +211,12 @@ const updateAbout = asyncHandler(async (req, res) => {
         jobTitle,
         SocialLinks,
         workfor,
-        knowsAbout
+        knowsAbout,
+        imageUrl: req.file.path
     }, { new: true, runValidators: true })
 
-    res.status(200)
+    return res
+        .status(200)
         .json(new ApiResponse(200, newAbout, "about successfully updated"))
 })
 
@@ -324,10 +321,22 @@ const updateExperience = asyncHandler(async (req, res) => {
         throw new ApiError(401, "all fileds are required")
     }
 
+    const image = req.file?.path
+
+    if (!image) {
+        throw new ApiError(401, "image path required")
+    }
+    const jobImage = await uploadOnCloudinary(image)
+
+    if (!jobImage) {
+        throw new ApiError(401, "jobImage is empty")
+    }
+
     const updatedData = await Experience.findByIdAndUpdate(id,
         {
             jobTitle,
-            description
+            description,
+            imageUrl: req.file.path
         },
         { new: true, runValidators: true }
     )
@@ -397,6 +406,17 @@ const updateProject = asyncHandler(async (req, res) => {
         throw new ApiError(401, "all fileds are empty")
     }
 
+    const videolocalPath = req.file?.path
+
+    if (!videolocalPath) {
+        throw new ApiError(401, "video url are required")
+    }
+    const videolink = await uploadOnCloudinary(videolocalPath)
+
+    if (!videolink) {
+        throw new ApiError(400, "videoUrl are empty ")
+    }
+
     const projectData = Project.findByIdAndUpdate(id,
         {
             title,
@@ -404,6 +424,7 @@ const updateProject = asyncHandler(async (req, res) => {
             technologies,
             githubLink,
             ProjectLink,
+            videoUrl: req.file.path
         }, { new: true, runValidators: true }
     )
 
@@ -418,7 +439,7 @@ const getContact = asyncHandler(async (req, res) => {
     if (!details) {
         throw new ApiError(401, "contact details not found")
     }
-
+    console.log("get message successfully ")
     return res
         .status(200)
         .json(new ApiResponse(201, details, "contact details successfully found"))
@@ -427,18 +448,21 @@ const getContact = asyncHandler(async (req, res) => {
 const createContact = asyncHandler(async (req, res) => {
     const { name, email, phoneNumber, message } = req.body
 
-    if ([name, email, phoneNumber, message].some((filed) => filed.trim() === "")) {
-        throw new ApiError(401, "all fileds are empty")
+    if (!phoneNumber) {
+        throw new ApiError(400, "phone number required")
+    }
+    if ([name, email, message].some((filed) => filed.trim() === "")) {
+        throw new ApiError(401, "all fileds are required")
     }
 
-    const ContactDetails = await Contact({
+    const ContactDetails = await Contact.create({
         name,
         email,
         phoneNumber,
         message,
         createdBy: email
     })
-
+    console.log("message send successfully ")
     return res
         .status(200)
         .json(new ApiResponse(200, ContactDetails, "contact created successfullylk "))

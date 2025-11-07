@@ -3,6 +3,7 @@ import {
     adminLogin,
     adminRegister,
     createAbout,
+    createContact,
     createExperience,
     createProject,
     createSkill,
@@ -28,7 +29,7 @@ router.route("/about").post(verifyJWT, upload.single("imageUrl"), createAbout)
 
 router.route("/getAbout").get(verifyJWT, getAbout)
 
-router.route("/updateAbout/:id").put(verifyJWT, updateAbout)
+router.route("/updateAbout/:id").put(verifyJWT,upload.single("imageUrl") ,updateAbout)
 
 router.route("/createSkill").post(verifyJWT, createSkill)
 
@@ -40,16 +41,16 @@ router.route("/createExperience").post(verifyJWT, upload.single("imageUrl"), cre
 
 router.route('/getExperience').get(verifyJWT, getExperience)
 
-router.route("/updateExperience").put(verifyJWT, updateExperience)
+router.route("/updateExperience/:id").put(verifyJWT,upload.single("imageUrl"), updateExperience)
 
 router.route("/getProject").get(verifyJWT, getProject)
 
 router.route("/createProject").post(verifyJWT, upload.single("videoUrl"), createProject)
 
-router.route("/updateProject").put(verifyJWT, updateProject)
+router.route("/updateProject/:id").put(verifyJWT,upload.single("videoUrl"), updateProject)
 
 router.route("/getContact").get(verifyJWT, getContact)
 
-router.route("/createContact").post(getContact)
+router.route("/createContact").post(verifyJWT,createContact)
 
 export default router

@@ -21,8 +21,7 @@ const ContactSchema = new mongoose.Schema(
             maxlength: [200, "message can't exceed 200 charcters"]
         },
         createdBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            type: String,
             required: true,
         }
     },
