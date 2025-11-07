@@ -7,6 +7,8 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 import { uploadOnCloudinary } from "../utils/Cloudinary.js"
 import Skill from "../model/skill.model.js";
 import Experience from "../model/experience.model.js";
+import Project from "../model/project.model.js";
+import Contact from "../model/contact.model.js";
 // generate AccessToken And refreshToken
 const generateAccessAndRefreshToken = async (adminId) => {
     // find user by id
@@ -269,7 +271,32 @@ const updateSkill = asyncHandler(async (req, res) => {
 })
 
 const createExperience = asyncHandler(async (req, res) => {
+    const { jobTitle, description } = req.body
 
+    if ([jobTitle, description].some((filed) => filed.trim() === "")) {
+        throw new ApiError(401, "all fileds are required")
+    }
+    const image = req.file?.path
+
+    if (!image) {
+        throw new ApiError(401, "image path required")
+    }
+    const jobImage = await uploadOnCloudinary(image)
+
+    if (!jobImage) {
+        throw new ApiError(401, "jobImage is empty")
+    }
+
+    const experienceData = Experience.create({
+        jobTitle,
+        description,
+        imageUrl: req.file.path,
+        createdBy: req.admin._id
+    })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, experienceData, "create expreanc successfully"))
 })
 
 const getExperience = asyncHandler(async (req, res) => {
@@ -281,8 +308,140 @@ const getExperience = asyncHandler(async (req, res) => {
     }
 
     return res
-    .status(200)
-    .json(new ApiResponse(201, userExperience, "user experience successfully found"))
+        .status(200)
+        .json(new ApiResponse(201, userExperience, "user experience successfully found"))
+})
+
+const updateExperience = asyncHandler(async (req, res) => {
+    const { id } = req.params
+
+    if (!id) {
+        throw new ApiError(401, "id are required")
+    }
+    const { jobTitle, description } = req.body
+
+    if ([jobTitle, description].some((filed) => filed.trim() === "")) {
+        throw new ApiError(401, "all fileds are required")
+    }
+
+    const updatedData = await Experience.findByIdAndUpdate(id,
+        {
+            jobTitle,
+            description
+        },
+        { new: true, runValidators: true }
+    )
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, updatedData, "Experience updated successfully "))
+})
+
+const getProject = asyncHandler(async (req, res) => {
+    const projectDetails = await Project.find()
+
+    if (!projectDetails) {
+        throw new ApiError(401, "User ProjectDetails not found")
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(201,
+            projectDetails,
+            "user ProjectDetails successfully found"
+        ))
+})
+
+const createProject = asyncHandler(async (req, res) => {
+    const { title, description, technologies, githubLink, ProjectLink } = req.body
+
+    if ([title, description, technologies, githubLink, ProjectLink].some((filed) => filed.trim() === "")) {
+        throw new ApiError(401, "all fileds are empty")
+    }
+    const videolocalPath = req.file?.path
+
+    if (!videolocalPath) {
+        throw new ApiError(401, "video url are required")
+    }
+    const videolink = await uploadOnCloudinary(videolocalPath)
+
+    if (!videolink) {
+        throw new ApiError(400, "videoUrl are empty ")
+    }
+
+    const ProjectData = await Project.create({
+        title,
+        description,
+        technologies,
+        githubLink,
+        ProjectLink,
+        videoUrl: req.file.path,
+        createdBy: req.admin._id
+    })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, ProjectData, "Create project successfully "))
+})
+
+const updateProject = asyncHandler(async (req, res) => {
+    const { id } = req.params
+
+    if (!id) {
+        throw new ApiError(400, "id required")
+    }
+
+    const { title, description, technologies, githubLink, ProjectLink } = req.body
+
+    if ([title, description, technologies, githubLink, ProjectLink].some((filed) => filed.trim() === "")) {
+        throw new ApiError(401, "all fileds are empty")
+    }
+
+    const projectData = Project.findByIdAndUpdate(id,
+        {
+            title,
+            description,
+            technologies,
+            githubLink,
+            ProjectLink,
+        }, { new: true, runValidators: true }
+    )
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, projectData, "project successfully updated"))
+})
+
+const getContact = asyncHandler(async (req, res) => {
+    const details = await Contact.find()
+
+    if (!details) {
+        throw new ApiError(401, "contact details not found")
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(201, details, "contact details successfully found"))
+})
+
+const createContact = asyncHandler(async (req, res) => {
+    const { name, email, phoneNumber, message } = req.body
+
+    if ([name, email, phoneNumber, message].some((filed) => filed.trim() === "")) {
+        throw new ApiError(401, "all fileds are empty")
+    }
+
+    const ContactDetails = await Contact({
+        name,
+        email,
+        phoneNumber,
+        message,
+        createdBy: email
+    })
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, ContactDetails, "contact created successfullylk "))
 })
 
 export {
@@ -295,5 +454,11 @@ export {
     createSkill,
     updateSkill,
     createExperience,
-    getExperience
+    getExperience,
+    updateExperience,
+    getProject,
+    createProject,
+    updateProject,
+    getContact,
+    createContact
 }
