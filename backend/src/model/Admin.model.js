@@ -29,7 +29,7 @@ const AdminSchema = new mongoose.Schema(
             enum:["user","admin"],
             default:"user"
         },
-        refreshToken: {
+        RefreshToken: {
             type: String,
         }
     },
@@ -64,7 +64,7 @@ AdminSchema.methods.generateAccessToken = function () {
     )
 }
 
-AdminSchema.methods.generateRefreshToken = async function (params) {
+AdminSchema.methods.generateRefreshToken =  function () {
     return jwt.sign(
         {
             _id: this._id,

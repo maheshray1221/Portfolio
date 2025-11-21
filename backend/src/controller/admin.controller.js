@@ -13,14 +13,14 @@ import Contact from "../model/contact.model.js";
 const generateAccessAndRefreshToken = async (adminId) => {
     // find user by id
     const admin = await Admin.findById(adminId)
-
+    console.log("main", admin)
     // generate access and refresh token 
     const accessToken = admin.generateAccessToken()
     const refreshToken = admin.generateRefreshToken()
-    admin.refreshToken = refreshToken
+    admin.RefreshToken = refreshToken
 
     await admin.save({ validateBeforeSave: false })
-
+    console.log("admin : ", admin)
     return { accessToken, refreshToken }
 }
 
@@ -56,7 +56,7 @@ const adminRegister = asyncHandler(async (req, res) => {
 
     // remove password and refresh token 
     const createAdmin = await Admin.findById(admin._id)
-        .select("-password -refreshToken")
+        .select("-password ")
 
     // validation check for create admin 
     if (!createAdmin) {
@@ -67,19 +67,19 @@ const adminRegister = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .json(
-            new ApiResponse(201, createAdmin, "registerd admin successfully ")
+            new ApiResponse(200, createAdmin, "registerd admin successfully ")
         )
 })
 
 const adminLogin = asyncHandler(async (req, res) => {
 
-    const { username, email, password } = req.body
+    const { username, password } = req.body
 
     // check user details found or not 
-    if (!username && !email) {
+    if (!username || !password) {
         throw new ApiError(401, "user credentials are not found")
     }
-    const admin = await Admin.findOne({ $or: [{ username }, { email }] })
+    const admin = await Admin.findOne({ username })
 
     // check admin found or not 
     if (!admin) {
@@ -101,22 +101,21 @@ const adminLogin = asyncHandler(async (req, res) => {
 
     // remove password and refresh Token 
     const logedInAdmin = await Admin.findById(admin._id).select("-password -refreshToken")
-    console.log("logIn Admin :", logedInAdmin)
 
+    console.log(logedInAdmin)
     // send cokie
     const options = {
         httpOnly: true,
-        secure: true,
+        secure: true
     }
     // res
     return res
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .json(new ApiResponse(
-            201,
+        .json(new ApiResponse(200,
             {
-                admin: refreshToken, accessToken, logedInAdmin
+                accessToken, refreshToken, logedInAdmin: admin
             },
             "Admin successfully loged In "
         ))
