@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
     adminLogin,
     adminRegister,
+    checkAuth,
     createAbout,
     createContact,
     createExperience,
@@ -25,7 +26,9 @@ router.route("/register-admin").post(adminRegister)
 
 router.route("/login-admin").post(adminLogin)
 
-router.route("/about").post(verifyJWT, upload.single("imageUrl"), createAbout)
+router.route("/check-auth").get(verifyJWT, checkAuth)
+
+router.route("/createAbout").post(verifyJWT, upload.single("imageUrl"), createAbout)
 
 router.route("/getAbout").get(verifyJWT, getAbout)
 

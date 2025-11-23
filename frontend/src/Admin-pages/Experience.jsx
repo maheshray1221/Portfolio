@@ -1,6 +1,6 @@
 import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
 import { useState } from "react";
-export default function About() {
+export default function Experience() {
   const [name, setName] = useState()
   const [jobTitle, setJobTitle] = useState()
   const [imageUrl, setImageUrl] = useState()
@@ -13,6 +13,7 @@ export default function About() {
 
   return (
     <div>
+        <p>this is Experience section</p>
       <Box className="flex justify-center mb-4" >
         <Avatar alt="Remy Sharp"  >
 

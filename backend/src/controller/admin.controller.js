@@ -85,7 +85,7 @@ const adminLogin = asyncHandler(async (req, res) => {
     if (!admin) {
         throw new ApiError(401, "user does not exist")
     }
-    console.log("password", password)
+  
     // check password right or wrong
     const isPasswordValid = await admin.isPasswordCorrect(password)
 
@@ -102,7 +102,7 @@ const adminLogin = asyncHandler(async (req, res) => {
     // remove password and refresh Token 
     const logedInAdmin = await Admin.findById(admin._id).select("-password -refreshToken")
 
-    console.log(logedInAdmin)
+
     // send cokie
     const options = {
         httpOnly: true,
@@ -119,6 +119,17 @@ const adminLogin = asyncHandler(async (req, res) => {
             },
             "Admin successfully loged In "
         ))
+})
+
+const checkAuth = asyncHandler(async (req, res) => {
+    return res
+        .status(200)
+        .json(new ApiResponse(
+            200,
+            { admin: req.admin },
+            "admin logged in"
+        )
+        )
 })
 
 const createAbout = asyncHandler(async (req, res) => {
@@ -470,6 +481,7 @@ const createContact = asyncHandler(async (req, res) => {
 export {
     adminRegister,
     adminLogin,
+    checkAuth,
     createAbout,
     getAbout,
     updateAbout,

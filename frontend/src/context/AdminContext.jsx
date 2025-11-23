@@ -1,16 +1,31 @@
-import axios from "axios";
-import { useContext } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { createContext } from "react";
-
+import { client } from "../utils/Client.js";
 
 export const AdminContext = createContext({})
 
-const client = axios.create({
-    baseURL: "http://localhost:8080/api/v1/admin"
-})
-
 export const AdminProvider = ({ children }) => {
-    // const adminContext = useContext(AdminContext)
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [admin, setAdmin] = useState(null)
+
+    useEffect(() => {
+        async () => {
+            try {
+                const res = await client.get("/check-auth", {
+                    withCredentials: true
+                })
+
+                setIsAuthenticated(true)
+                setAdmin(res.data.data.admin)
+            } catch (error) {
+                setIsAuthenticated(false)
+                setAdmin(null)
+            }
+
+        }
+    }, [])
 
     // admin register
     const registerAdmin = async (email, password, username) => {
@@ -47,7 +62,12 @@ export const AdminProvider = ({ children }) => {
 
     const data = {
         registerAdmin,
-        loginAdmin
+        loginAdmin,
+        isAuthenticated,
+        setIsAuthenticated,
+        admin,
+        setAdmin
+
     }
 
     return (
