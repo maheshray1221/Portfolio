@@ -1,19 +1,18 @@
 import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
 import { useState } from "react";
 export default function Project() {
-  const [name, setName] = useState()
-  const [jobTitle, setJobTitle] = useState()
-  const [imageUrl, setImageUrl] = useState()
-  const [socialLinks, setSocialLinks] = useState([])
-  const [workfor, setWorkfor] = useState()
-  const [knowsAbout, setKnowsAbout] = useState([])
+  const [title, setTitle] = useState()
+  const [description, setDescription] = useState()
+  const [videoUrl, setVideoUrl] = useState()
+  const [technologies, setTechnologies] = useState([])
+  const [githubLink, setGithubLink] = useState()
+  const [projectLink, setProjectLink] = useState([])
   const [msg, setMsg] = useState()
   const [err, setErr] = useState()
   const [open, setOpen] = useState(false)
 
   return (
     <div>
-        <p>this is Project section</p>
       <Box className="flex justify-center mb-4" >
         <Avatar alt="Remy Sharp"  >
 
@@ -26,78 +25,78 @@ export default function Project() {
           className="w-[70%] "
           required
           margin="normal"
-          id="name"
-          label="Name"
+          id="title"
+          label="Title"
           variant="outlined"
-          name="name"
-          value={name}
-          autoComplete="name"
+          name="title"
+          value={title}
+          autoComplete="title"
           autoFocus
-          onChange={(e) => setName(e.target.value)} />
+          onChange={(e) => setTitle(e.target.value)} />
 
         <TextField
           className="w-[70%]"
           variant="outlined"
-          label="Job Title"
+          label="Description"
           required
           margin="normal"
-          id="jobTitle"
-          name="jobTitle"
-          value={jobTitle}
-          autoComplete="jobTitle"
-          onChange={(e) => setJobTitle(e.target.value)}>
+          id="description"
+          name="description"
+          value={description}
+          autoComplete="description"
+          onChange={(e) => setDescription(e.target.value)}>
         </TextField>
 
         <TextField
           className="w-[70%]"
           variant="outlined"
-          label="Image Url"
           required
+          type="file"
           margin="normal"
-          id="imageUrl"
-          name="imageUrl"
-          value={imageUrl}
-          autoComplete="imageUrl"
-          onChange={(e) => setImageUrl(e.target.value)}>
+          id="videoUrl"
+          name="videoUrl"
+          value={videoUrl}
+          autoComplete="videoUrl"
+          onChange={(e) => setVideoUrl(e.target.value)}>
         </TextField>
 
         <TextField
           className="w-[70%]"
           variant="outlined"
-          label="Social Links"
+          label="Technologies"
           required
           margin="normal"
-          id="socialLinks"
-          name="socialLinks"
-          value={socialLinks}
-          autoComplete="socialLinks"
-          onChange={(e) => setSocialLinks(e.target.value)}>
+          id="technologies"
+          name="technologies"
+          value={technologies}
+          autoComplete="technologies"
+          onChange={(e) => setTechnologies(e.target.value)}>
         </TextField>
 
         <TextField
           className="w-[70%]"
           variant="outlined"
-          label="Work For"
+          label="Github Link"
           required
           margin="normal"
-          id="workfor"
-          name="workfor"
-          value={workfor}
-          autoComplete="workfor"
-          onChange={(e) => setWorkfor(e.target.value)}>
+          id="githubLink"
+          name="githubLink"
+          value={githubLink}
+          autoComplete="githubLink"
+          onChange={(e) => setGithubLink(e.target.value)}>
         </TextField>
 
         <TextField
           className="w-[70%]"
           variant="outlined"
-          label="Knows About"
+          label="Project Link"
           required
           margin="normal"
-          id="knowsAbout"
-          name="knowsAbout"
-          value={knowsAbout}
-          autoComplete="knowsAbout"
-          onChange={(e) => setWorkfor(e.target.value)}>
+          id="projectLink"
+          name="projectLink"
+          value={projectLink}
+          autoComplete="projectLink"
+          onChange={(e) => setProjectLink(e.target.value)}>
         </TextField>
       </Box>
       <p className="flex justify-center text-red-500 ">{err}</p>

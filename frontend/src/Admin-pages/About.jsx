@@ -1,5 +1,6 @@
 import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PortfolioContext } from "../context/PortfolioContext.jsx"
 export default function About() {
   const [name, setName] = useState()
   const [jobTitle, setJobTitle] = useState()
@@ -10,6 +11,20 @@ export default function About() {
   const [msg, setMsg] = useState()
   const [err, setErr] = useState()
   const [open, setOpen] = useState(false)
+
+  const { handleCreateAbout } = useContext(PortfolioContext)
+
+  const handleAbout = async () => {
+    try {
+      let result = await handleCreateAbout(name, jobTitle, imageUrl, socialLinks, workfor, knowsAbout)
+      setMsg(result)
+      console.log(result);
+    } catch (err) {
+      let message = err.message || "Somthing went wrong"
+      setErr(message)
+    }
+
+  }
 
   return (
     <div>
@@ -50,8 +65,9 @@ export default function About() {
         <TextField
           className="w-[70%]"
           variant="outlined"
-          label="Image Url"
+          label=""
           required
+          type="file"
           margin="normal"
           id="imageUrl"
           name="imageUrl"
@@ -96,12 +112,14 @@ export default function About() {
           name="knowsAbout"
           value={knowsAbout}
           autoComplete="knowsAbout"
-          onChange={(e) => setWorkfor(e.target.value)}>
+          onChange={(e) => setKnowsAbout(e.target.value)}>
         </TextField>
       </Box>
       <p className="flex justify-center text-red-500 ">{err}</p>
       <Box className="flex justify-center mt-5 mb-5">
-        <Button variant="contained"
+        <Button
+          onClick={handleAbout}
+          variant="contained"
           type="button">
           hello
         </Button>
