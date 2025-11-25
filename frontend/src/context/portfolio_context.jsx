@@ -1,4 +1,3 @@
-import { Children } from "react";
 import { createContext } from "react";
 import { client } from "../utils/Client.js"
 
@@ -6,42 +5,57 @@ export const PortfolioContext = createContext({})
 
 export const PortfolioProvider = ({ children }) => {
 
-    // handleCreateAbout
-    const handleCreateAbout = async (
-        name,
-        jobTitle,
-        imageUrl,
-        SocialLinks,
-        workfor,
-        knowsAbout
-    ) => {
+    // About
+    const handleCreateAbout = async (FormData) => {
         try {
-            const res = await client.post("/createAbout", {
-                name,
-                jobTitle,
-                imageUrl,
-                SocialLinks,
-                workfor,
-                knowsAbout
-            })
+            const res = await client.post("/createAbout",
+                FormData,
+                {
+                    withCredentials: true,
+                }
+            )
 
             if (res.status === 200) {
-                console.log(res.data)
+                console.log(res.data.message)
             }
+            return res.data
 
         } catch (error) {
             throw error
         }
     }
 
-    // handleGetAbout
-    
-    // handleUpdateAbout
+    const getAbout = async () => {
+        try {
+            let res = await client.get("/getAbout", { withCredentials: true }
+            )
+            if (res.status === 200) {
+                console.log(res.data)
+            }
+            return res.data
+        } catch (err) {
+            throw err
+        }
+    }
+
+    const UpdateAbout = async (FormData) => {
+        let res = await client.put("/updateAbout/:id", {
+            FormData
+        }, { withCredentials: true })
+
+        if (res.status === 200) {
+            console.log(res.data)
+        }
+        return res.data
+    }
 
     // handleCreateSkill
-    const handleCreateSkill = async (skill) => {
+    const createSkill = async (skill) => {
         try {
-            const res = await client.post("/createSkill", { skill })
+            const res = await client.post("/createSkill", {
+                skill
+            },
+                { withCredentials: true })
 
             if (res.status === 200) {
                 console.log(res.data)
@@ -113,7 +127,9 @@ export const PortfolioProvider = ({ children }) => {
 
     const data = {
         handleCreateAbout,
-        handleCreateSkill,
+        getAbout,
+        UpdateAbout,
+        createSkill,
         handleCreateProject,
         handleCreateExperience
     }

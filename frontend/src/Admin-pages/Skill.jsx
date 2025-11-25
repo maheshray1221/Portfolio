@@ -1,10 +1,17 @@
 import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PortfolioContext } from "../context/portfolio_context";
 export default function Skill() {
-  const [skill, setSkill] = useState([])
+  const [skill, setSkill] = useState("")
   const [msg, setMsg] = useState()
   const [err, setErr] = useState()
   const [open, setOpen] = useState(false)
+
+  const { createSkill } = useContext(PortfolioContext)
+  const handleCreateSkill = async () => {
+    let res = await createSkill(skill)
+    console.log(res)
+  }
 
   return (
     <div>
@@ -31,7 +38,9 @@ export default function Skill() {
       </Box>
       <p className="flex justify-center text-red-500 ">{err}</p>
       <Box className="flex justify-center mt-5 mb-5">
-        <Button variant="contained"
+        <Button
+          onClick={handleCreateSkill}
+          variant="contained"
           type="button">
           Add
         </Button>

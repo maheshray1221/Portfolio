@@ -85,7 +85,7 @@ const adminLogin = asyncHandler(async (req, res) => {
     if (!admin) {
         throw new ApiError(401, "user does not exist")
     }
-  
+
     // check password right or wrong
     const isPasswordValid = await admin.isPasswordCorrect(password)
 
@@ -149,7 +149,7 @@ const createAbout = asyncHandler(async (req, res) => {
     }
 
     const profileImage = await uploadOnCloudinary(imageLocalPath);
-
+    console.log("profile:", profileImage)
     if (!profileImage) {
         throw new ApiError(400, "profileImage file is required");
     }
@@ -173,7 +173,8 @@ const createAbout = asyncHandler(async (req, res) => {
 })
 
 const getAbout = asyncHandler(async (req, res) => {
-    const about = await About.findOne()
+    let admin = req.admin
+    const about = await About.findOne({ createdBy: admin._id })
 
     if (!about) {
         throw new ApiError(401, "user data not found")
@@ -231,8 +232,8 @@ const updateAbout = asyncHandler(async (req, res) => {
 })
 
 const getSkill = asyncHandler(async (req, res) => {
-
-    const skills = await Skill.find()
+    let admin = req.admin
+    const skills = await Skill.findOne({ createdBy: admin._id })
 
     if (!skills) {
         throw new ApiError(401, "skills array not found")
@@ -307,8 +308,8 @@ const createExperience = asyncHandler(async (req, res) => {
 })
 
 const getExperience = asyncHandler(async (req, res) => {
-
-    const userExperience = await Experience.find()
+    let admin = req.admin
+    const userExperience = await Experience.findOne({ createdBy: admin._id })
 
     if (!userExperience) {
         throw new ApiError(401, "User experience not found")
@@ -357,7 +358,8 @@ const updateExperience = asyncHandler(async (req, res) => {
 })
 
 const getProject = asyncHandler(async (req, res) => {
-    const projectDetails = await Project.find()
+    let admin = req.admin
+    const projectDetails = await Project.findOne({ createdBy: admin._id })
 
     if (!projectDetails) {
         throw new ApiError(401, "User ProjectDetails not found")
@@ -444,7 +446,8 @@ const updateProject = asyncHandler(async (req, res) => {
 })
 
 const getContact = asyncHandler(async (req, res) => {
-    const details = await Contact.find()
+    let admin = req.admin
+    const details = await Contact.findOne({ createdBy: admin._id })
 
     if (!details) {
         throw new ApiError(401, "contact details not found")
