@@ -2,16 +2,18 @@ import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { PortfolioContext } from "../context/portfolio_context.jsx"
 import { AboutUpdate } from "./Update-page/AboutUpdate.jsx";
+import { useNavigate } from "react-router-dom";
 export default function About() {
-  const [name, setName] = useState()
-  const [jobTitle, setJobTitle] = useState()
+  const navigate = useNavigate()
+  const [name, setName] = useState("")
+  const [jobTitle, setJobTitle] = useState("")
   const [imageUrl, setImageUrl] = useState(null)
   const [socialLinks, setSocialLinks] = useState([])
-  const [workfor, setWorkfor] = useState()
+  const [workfor, setWorkfor] = useState("")
   const [knowsAbout, setKnowsAbout] = useState([])
   const [data, setData] = useState({})
-  const [msg, setMsg] = useState()
-  const [err, setErr] = useState()
+  const [msg, setMsg] = useState("")
+  const [err, setErr] = useState("")
   const [open, setOpen] = useState(false)
 
 
@@ -40,6 +42,7 @@ export default function About() {
     const handleGetAbout = async () => {
       let result = await getAbout()
       setData(result.data)
+
       console.log("result =>", result.data)
     }
     handleGetAbout()
@@ -149,7 +152,7 @@ export default function About() {
             onClick={handleAbout}
             variant="contained"
             type="button">
-            hello
+            Submit
           </Button>
         </Box>
         <Snackbar
@@ -160,7 +163,15 @@ export default function About() {
         />
       </div>
       <hr />
-      <AboutUpdate />
+      <Box className="flex justify-center mt-5 mb-5">
+        <Button
+          variant="contained"
+          type="button"
+          onClick={() => navigate(`/about/${data._id}`)}
+        >Update About</Button>
+      </Box>
+
+
     </>
 
   )

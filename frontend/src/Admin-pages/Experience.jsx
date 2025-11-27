@@ -8,6 +8,10 @@ export default function Experience() {
   const [err, setErr] = useState()
   const [open, setOpen] = useState(false)
 
+// jobTitle,
+//         description,
+//         imageUrl,
+
   return (
     <div>
       <Box className="flex justify-center mb-4" >

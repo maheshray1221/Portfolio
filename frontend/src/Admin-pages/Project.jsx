@@ -11,6 +11,13 @@ export default function Project() {
   const [err, setErr] = useState()
   const [open, setOpen] = useState(false)
 
+
+  //  title,
+  //         description,
+  //         videoUrl,
+  //         technologies,
+  //         githubLink,
+  //         ProjectLink
   return (
     <div>
       <Box className="flex justify-center mb-4" >
@@ -103,7 +110,7 @@ export default function Project() {
       <Box className="flex justify-center mt-5 mb-5">
         <Button variant="contained"
           type="button">
-          hello
+          Submit
         </Button>
       </Box>
       <Snackbar

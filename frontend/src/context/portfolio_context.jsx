@@ -16,7 +16,7 @@ export const PortfolioProvider = ({ children }) => {
             )
 
             if (res.status === 200) {
-                console.log(res.data.message)
+                console.log(res.message)
             }
             return res.data
 
@@ -38,18 +38,22 @@ export const PortfolioProvider = ({ children }) => {
         }
     }
 
-    const UpdateAbout = async (FormData) => {
-        let res = await client.put("/updateAbout/:id", {
-            FormData
-        }, { withCredentials: true })
+    const updateAbout = async (id, FormData) => {
+        try {
+            let res = await client.put(`/updateAbout/${id}`,
+                FormData,
+                { withCredentials: true })
 
-        if (res.status === 200) {
-            console.log(res.data)
+            if (res.status === 200) {
+                console.log(res.data)
+            }
+            return res.data
+        } catch (error) {
+            console.log(error)
         }
-        return res.data
     }
 
-    // handleCreateSkill
+    // Skill
     const createSkill = async (skill) => {
         try {
             const res = await client.post("/createSkill", {
@@ -65,73 +69,112 @@ export const PortfolioProvider = ({ children }) => {
             throw error
         }
     }
-    // handleGetSkill
-    // handleUpdateSkill
 
-
-    // handleCreateProject
-    const handleCreateProject = async (
-        title,
-        description,
-        videoUrl,
-        technologies,
-        githubLink,
-        ProjectLink
-    ) => {
+    const getSkill = async () => {
         try {
-            const res = await client.post("/createProject", {
-                title,
-                description,
-                videoUrl,
-                technologies,
-                githubLink,
-                ProjectLink
-            })
-
-            if (res.status === 200) {
-                console.log(res.data)
-            }
-
+            const res = await client.get("/getSkill", { withCredentials: true })
+            console.log(res.data)
+            return res.data
         } catch (error) {
             throw error
         }
     }
-    // handleGetProject
-    // handleUpdateProject
 
-    // handleCreateExperience
-    const handleCreateExperience = async (
-        jobTitle,
-        description,
-        imageUrl,
-
-    ) => {
+    const updateSkill = async (id, skill) => {
         try {
-            const res = await client.post("/createExperience", {
-                jobTitle,
-                description,
-                imageUrl,
-            })
-
-            if (res.status === 200) {
-                console.log(res.data)
-            }
-
+            const res = await client.put(`updateSkill/${id}`, skill,
+                { withCredentials: true })
+            console.log(res)
+            return res.data
         } catch (error) {
             throw error
         }
     }
-    // handleGetExperience
-    // handleUpdateExperience
+
+    // Project
+    const createProject = async (FormData) => {
+        try {
+            const res = await client.post("/createProject", FormData,
+                { withCredentials: true }
+            )
+
+            if (res.status === 200) {
+                console.log(res.data)
+            }
+            return res.data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const getProject = async () => {
+        try {
+            const res = await client.get("/getProject", { withCredentials: true })
+            console.log(res.data)
+            return res.data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const updateProject = async (id, FormData) => {
+        try {
+            const res = await client.put(`/updateProject/${id}`, FormData,
+                { withCredentials: true })
+            console.log(res.data)
+            return res.data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    // Experience
+    const createExperience = async (FormData) => {
+        try {
+            const res = await client.post("/createExperience", FormData,
+                { withCredentials: true })
+
+            if (res.status === 200) {
+                console.log(res.data)
+            }
+            return res.data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const getExperience = async () => {
+        try {
+            const res = await client.get("/getExperience", { withCredentials: true })
+            console.log(res.data)
+            return res.data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const updateExperience = async (id, FormData) => {
+        const res = await client.put(`/updateExperience/${id}`, FormData,
+            { withCredentials: true }
+        )
+        console.log(res.data)
+        return res.data
+    }
 
 
     const data = {
         handleCreateAbout,
         getAbout,
-        UpdateAbout,
+        updateAbout,
         createSkill,
-        handleCreateProject,
-        handleCreateExperience
+        getSkill,
+        updateSkill,
+        createProject,
+        getProject,
+        updateProject,
+        createExperience,
+        getExperience,
+        updateExperience
     }
     return (
         <PortfolioContext.Provider value={data}>
