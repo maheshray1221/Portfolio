@@ -94,7 +94,8 @@ export const PortfolioProvider = ({ children }) => {
     // Project
     const createProject = async (FormData) => {
         try {
-            const res = await client.post("/createProject", FormData,
+            const res = await client.post("/createProject",
+                FormData,
                 { withCredentials: true }
             )
 
@@ -133,10 +134,7 @@ export const PortfolioProvider = ({ children }) => {
         try {
             const res = await client.post("/createExperience", FormData,
                 { withCredentials: true })
-
-            if (res.status === 200) {
-                console.log(res.data)
-            }
+            console.log(res.data)
             return res.data
         } catch (error) {
             throw error
@@ -154,11 +152,15 @@ export const PortfolioProvider = ({ children }) => {
     }
 
     const updateExperience = async (id, FormData) => {
-        const res = await client.put(`/updateExperience/${id}`, FormData,
-            { withCredentials: true }
-        )
-        console.log(res.data)
-        return res.data
+        try {
+            const res = await client.put(`/updateExperience/${id}`, FormData,
+                { withCredentials: true }
+            )
+            console.log(res.data)
+            return res.data
+        } catch (error) {
+            throw error
+        }
     }
 
 

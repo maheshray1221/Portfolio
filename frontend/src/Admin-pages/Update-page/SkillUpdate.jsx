@@ -5,38 +5,28 @@ import { useParams } from "react-router-dom";
 
 // update About
 export const SkillUpdate = function () {
-    const [skill, setSkill] = useState("")
-    const [data, setData] = useState({})
+    const [skill, setSkill] = useState([])
     const [msg, setMsg] = useState("")
     const [err, setErr] = useState("")
     const [open, setOpen] = useState(false)
 
-    const { UpdateAbout, getAbout } = useContext(PortfolioContext)
+    const { updateSkill, getSkill } = useContext(PortfolioContext)
     const { id } = useParams()
-    // name, jobTitle, imageUrl, SocialLinks, workfor, knowsAbout
+
     const HandleUpdateAbout = async () => {
-        let fb = new FormData()
-        fb.append("name", name)
-        fb.append("jobTitle", jobTitle)
-        fb.append("imageUrl", imageUrl)
-        fb.append("SocialLinks", socialLinks)
-        fb.append("workfor", workfor)
-        fb.append("knowsAbout", knowsAbout)
-
-        let result = await UpdateAbout(id, fb)
-        setData(result)
-
+        let result = await updateSkill(id, skill)
+        console.log(result)
     }
     useEffect(() => {
-        const handleGetAbout = async () => {
-            let res = await getAbout()
-            setSkill(res.data.skill)
-            
+        const handleGetSkill = async () => {
+            let result = await getSkill();
+            console.log("->", result)
+            setSkill(result.data.skill)
         }
-        handleGetAbout()
+        handleGetSkill()
     }, [])
     return (
-        <div>
+        <div className="mb-[16.2vw]">
             <Box className="flex justify-center mb-4" >
                 <Avatar alt="Remy Sharp"  >
 
@@ -50,14 +40,14 @@ export const SkillUpdate = function () {
                     className="w-[70%] "
                     required
                     margin="normal"
-                    id="name"
-                    label="Name"
+                    id="skill"
+                    label="Skill"
                     variant="outlined"
-                    name="name"
-                    value={name}
-                    autoComplete="name"
+                    name="skill"
+                    value={skill}
+                    autoComplete="skill"
                     autoFocus
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setSkill(e.target.value)}
                     InputLabelProps={{ shrink: true }} />
             </Box>
             <p className="flex justify-center text-red-500 ">{err}</p>
@@ -66,7 +56,7 @@ export const SkillUpdate = function () {
                     onClick={HandleUpdateAbout}
                     variant="contained"
                     type="button">
-                    hello
+                    Update
                 </Button>
             </Box>
             <Snackbar

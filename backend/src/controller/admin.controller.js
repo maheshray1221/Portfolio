@@ -376,11 +376,14 @@ const getProject = asyncHandler(async (req, res) => {
 const createProject = asyncHandler(async (req, res) => {
     const { title, description, technologies, githubLink, ProjectLink } = req.body
 
-    if ([title, description, technologies, githubLink, ProjectLink].some((filed) => filed.trim() === "")) {
-        throw new ApiError(401, "all fileds are empty")
+    if ([title, description, technologies, githubLink, ProjectLink]
+        .some((filed) => !filed || String(filed).trim() === "")) {
+        throw new ApiError(401, "all fileds are required")
     }
     const videolocalPath = req.file?.path
 
+    console.log("video",videolocalPath)
+    
     if (!videolocalPath) {
         throw new ApiError(401, "video url are required")
     }
@@ -415,11 +418,11 @@ const updateProject = asyncHandler(async (req, res) => {
     const { title, description, technologies, githubLink, ProjectLink } = req.body
 
     if ([title, description, technologies, githubLink, ProjectLink].some((filed) => filed.trim() === "")) {
-        throw new ApiError(401, "all fileds are empty")
+        throw new ApiError(401, "all fileds are required")
     }
 
     const videolocalPath = req.file?.path
-
+    
     if (!videolocalPath) {
         throw new ApiError(401, "video url are required")
     }
@@ -429,7 +432,7 @@ const updateProject = asyncHandler(async (req, res) => {
         throw new ApiError(400, "videoUrl are empty ")
     }
 
-    const projectData = Project.findByIdAndUpdate(id,
+    const projectData = await Project.findByIdAndUpdate(id,
         {
             title,
             description,
@@ -439,7 +442,7 @@ const updateProject = asyncHandler(async (req, res) => {
             videoUrl: req.file.path
         }, { new: true, runValidators: true }
     )
-
+    console.log("data",projectData)
     return res
         .status(200)
         .json(new ApiResponse(200, projectData, "project successfully updated"))

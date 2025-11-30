@@ -16,7 +16,7 @@ export const AboutUpdate = function () {
     const [err, setErr] = useState("")
     const [open, setOpen] = useState(false)
 
-    const { UpdateAbout, getAbout } = useContext(PortfolioContext)
+    const { updateAbout, getAbout } = useContext(PortfolioContext)
     const { id } = useParams()
     // name, jobTitle, imageUrl, SocialLinks, workfor, knowsAbout
     const HandleUpdateAbout = async () => {
@@ -28,7 +28,7 @@ export const AboutUpdate = function () {
         fb.append("workfor", workfor)
         fb.append("knowsAbout", knowsAbout)
 
-        let result = await UpdateAbout(id, fb)
+        let result = await updateAbout(id, fb)
 
     }
     useEffect(() => {
@@ -148,7 +148,7 @@ export const AboutUpdate = function () {
                     onClick={HandleUpdateAbout}
                     variant="contained"
                     type="button">
-                    hello
+                    Update
                 </Button>
             </Box>
             <Snackbar

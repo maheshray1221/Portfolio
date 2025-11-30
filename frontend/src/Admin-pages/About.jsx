@@ -1,7 +1,6 @@
 import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { PortfolioContext } from "../context/portfolio_context.jsx"
-import { AboutUpdate } from "./Update-page/AboutUpdate.jsx";
 import { useNavigate } from "react-router-dom";
 export default function About() {
   const navigate = useNavigate()
@@ -31,7 +30,6 @@ export default function About() {
       fd.append("knowsAbout", knowsAbout)
 
       let res = await handleCreateAbout(fd)
-      console.log("res => ", res)
     } catch (err) {
       let message = err.message || "Somthing went wrong"
       setErr(message)

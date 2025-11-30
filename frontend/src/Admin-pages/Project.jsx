@@ -1,25 +1,59 @@
 import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { PortfolioContext } from "../context/portfolio_context";
+import { useNavigate } from "react-router-dom";
 export default function Project() {
-  const [title, setTitle] = useState()
-  const [description, setDescription] = useState()
-  const [videoUrl, setVideoUrl] = useState()
-  const [technologies, setTechnologies] = useState([])
+  const navigate = useNavigate()
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [videoFile, setVideoFile] = useState("")
+  const [technologies, setTechnologies] = useState("")
   const [githubLink, setGithubLink] = useState()
-  const [projectLink, setProjectLink] = useState([])
+  const [projectLink, setProjectLink] = useState("")
+  const [data, setData] = useState("")
   const [msg, setMsg] = useState()
   const [err, setErr] = useState()
   const [open, setOpen] = useState(false)
 
+  const { getProject, createProject } = useContext(PortfolioContext)
 
-  //  title,
-  //         description,
-  //         videoUrl,
-  //         technologies,
-  //         githubLink,
-  //         ProjectLink
+  useEffect(() => {
+    const handleGetProject = async () => {
+      const res = await getProject()
+      console.log(res)
+      setData(res.data)
+    }
+    handleGetProject()
+  }, [])
+
+  const handleCreateProject = async () => {
+    try {
+      const fb = new FormData()
+      fb.append("title", title)
+      fb.append("description", description)
+      fb.append("videoUrl", videoFile)
+      fb.append("technologies", technologies)
+      fb.append("githubLink", githubLink)
+      fb.append("ProjectLink", projectLink)
+
+      const res = await createProject(fb)
+      console.log(res)
+    } catch (err) {
+      let message = err.message || "Somthing went wrong"
+      setErr(message)
+    }
+  }
   return (
-    <div>
+    <>
+      <div className="text-4xl leading-20 border mb-5 bg-gray-400 text-center">
+        <p>Title : {data.title}</p>
+        <p>Description : {data.description}</p>
+        <p>VideoUrl : {data.videoUrl}</p>
+        <p>Technologies : {data.technologies}</p>
+        <p>Github Link : {data.githubLink}</p>
+        <p>Project Link : {data.ProjectLink}</p>
+      </div>
+      <hr />
       <Box className="flex justify-center mb-4" >
         <Avatar alt="Remy Sharp"  >
 
@@ -54,18 +88,16 @@ export default function Project() {
           onChange={(e) => setDescription(e.target.value)}>
         </TextField>
 
-        <TextField
-          className="w-[70%]"
-          variant="outlined"
+        <input
+          className="w-[70%] border h-[3.5vw] border-gray-300"
           required
           type="file"
           margin="normal"
           id="videoUrl"
           name="videoUrl"
-          value={videoUrl}
           autoComplete="videoUrl"
-          onChange={(e) => setVideoUrl(e.target.value)}>
-        </TextField>
+          onChange={(e) => setVideoFile(e.target.files[0])} />
+
 
         <TextField
           className="w-[70%]"
@@ -108,7 +140,9 @@ export default function Project() {
       </Box>
       <p className="flex justify-center text-red-500 ">{err}</p>
       <Box className="flex justify-center mt-5 mb-5">
-        <Button variant="contained"
+        <Button
+          onClick={handleCreateProject}
+          variant="contained"
           type="button">
           Submit
         </Button>
@@ -119,6 +153,14 @@ export default function Project() {
         onClose={() => setOpen(false)}
         message={msg}
       />
-    </div>
+      <hr />
+      <Box className="flex justify-center mt-5 mb-5">
+        <Button
+          variant="contained"
+          type="button"
+          onClick={() => navigate(`/project/${data._id}`)}
+        >Update About</Button>
+      </Box>
+    </>
   )
 }

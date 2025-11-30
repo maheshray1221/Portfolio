@@ -1,20 +1,33 @@
 import { TextField, Button, Avatar, Snackbar, Box } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PortfolioContext } from "../context/portfolio_context";
+import { useNavigate } from "react-router-dom";
 export default function Skill() {
+  const navigete = useNavigate()
   const [skill, setSkill] = useState("")
+  const [data, setData] = useState({})
   const [msg, setMsg] = useState()
   const [err, setErr] = useState()
   const [open, setOpen] = useState(false)
 
-  const { createSkill } = useContext(PortfolioContext)
+  const { createSkill, getSkill } = useContext(PortfolioContext)
   const handleCreateSkill = async () => {
     let res = await createSkill(skill)
     console.log(res)
   }
 
+  useEffect(() => {
+    const handleGetSkill = async () => {
+      let result = await getSkill();
+      setData(result.data)
+    }
+    handleGetSkill()
+  }, [])
   return (
-    <div>
+    <>
+      <div>
+        <p>Skills : {data.skill}</p>
+      </div>
       <Box className="flex justify-center mb-4 " >
         <Avatar alt="Remy Sharp"  >
 
@@ -42,7 +55,7 @@ export default function Skill() {
           onClick={handleCreateSkill}
           variant="contained"
           type="button">
-          Add
+          Submit
         </Button>
       </Box>
       <Snackbar
@@ -51,6 +64,13 @@ export default function Skill() {
         onClose={() => setOpen(false)}
         message={msg}
       />
-    </div>
+      <Box className="text-center mb-5">
+        <Button
+          variant="contained"
+          type="button"
+          onClick={() => navigete(`/Skill/${data._id}`)}
+        >Update Skill</Button>
+      </Box>
+    </>
   )
 }

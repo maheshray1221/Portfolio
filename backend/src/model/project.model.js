@@ -11,8 +11,10 @@ const ProjectSchema = new mongoose.Schema(
             required: true,
         },
         videoUrl: {
-            type: String,
-            required: true,
+            type: String,  // cloudinary url
+            public_id: { type: String },
+            url: { type: String },
+            required: true
         },
         technologies: {
             type: String,
@@ -31,6 +33,7 @@ const ProjectSchema = new mongoose.Schema(
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Admin",
+            unique: true,
             required: true,
         }
     },
