@@ -13,6 +13,7 @@ import { AboutUpdate } from './Admin-pages/Update-page/AboutUpdate.jsx'
 import { SkillUpdate } from './Admin-pages/Update-page/SkillUpdate.jsx'
 import { ExperienceUpdate } from './Admin-pages/Update-page/ExperienceUpdate.jsx'
 import { ProjectUpdate } from './Admin-pages/Update-page/ProjectUpdate.jsx'
+import MobileContact from './User-Pages/MobileContact.jsx'
 export default function App() {
   return (
     <div>
@@ -21,6 +22,7 @@ export default function App() {
           <PortfolioProvider>
             <Routes>
               <Route path='/' element={<ClientSide />} />
+              <Route path='/talkme' element={<MobileContact/>}/>
               <Route path='/admin-Auth' element={<AdminAuth />} />
               <Route path='/admin' element={<Layout />}>
                 <Route path='about' element={<About />} />

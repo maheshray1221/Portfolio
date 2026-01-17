@@ -7,7 +7,7 @@ export default function About() {
       <div className='flex flex-col lg:flex-row lg:flex bg-[#121f28] lg:h-[41vw]'>
         <div className='flex order-2 mt-15 lg:order-1 lg:h-[70%] lg:w-[50%] lg:mt-[6vw] lg:ml-[5vw]'>
           <div className='flex items-center space-x-6'>
-            <div className='ml-1 lg:ml-0 relative flex flex-col items-center gap-1.5'>
+            <div className='ml-1 lg:ml-0 relative hidden md:flex flex-col items-center gap-1.5'>
               <div className='w-1 h-14 lg:h-30 bg-[#fb715e] '></div>
               <div className='lg:w-4 w-2 h-2 lg:h-4 bg-[#fb715e] rounded-full'></div>
               <div className='w-1 h-14 lg:h-27 bg-[#fb715e] '></div>
@@ -16,7 +16,7 @@ export default function About() {
             </div>
           </div>
 
-          <div className='flex flex-col justify-around ml-4 lg:ml-5 text-[#f5faff] '>
+          <div className='hidden md:flex flex-col justify-around ml-4 lg:ml-5 text-[#f5faff] '>
             <div className='flex gap-3 lg:gap-7 items-center'>
               <i className="ri-code-box-line text-3xl lg:text-7xl"></i>
               <p className='text-[1.8rem] lg:text-3xl'>WebSite Devlopment</p>
