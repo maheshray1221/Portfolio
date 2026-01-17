@@ -23,7 +23,7 @@ export default function AdminAuth() {
                 console.log("result", result)
                 setMessage(result)
                 setOpen(true)
-                navigate("/about")
+                navigate("/admin/about")
             }
             if (formState === 1) {
                 const result = await registerAdmin(email, username, password)

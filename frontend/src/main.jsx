@@ -7,6 +7,5 @@ import ClientSide from './ClientSide.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    <ClientSide />
   </StrictMode>,
 )

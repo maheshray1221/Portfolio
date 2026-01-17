@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import { AdminProvider } from './context/AdminContext'
 import AdminAuth from './Admin-pages/AdminAuth'
+import ClientSide from './ClientSide.jsx'
 import Layout from './Layout'
 import About from "./Admin-pages/About.jsx"
 import Skill from './Admin-pages/Skill.jsx'
@@ -19,6 +20,7 @@ export default function App() {
         <AdminProvider>
           <PortfolioProvider>
             <Routes>
+              <Route path='/' element={<ClientSide />} />
               <Route path='/admin-Auth' element={<AdminAuth />} />
               <Route path='/admin' element={<Layout />}>
                 <Route path='about' element={<About />} />
