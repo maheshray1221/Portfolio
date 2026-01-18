@@ -1,11 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
 export default function MobileContact() {
   const navigate = useNavigate("")
     return (
     <div>
         <div className='w-full min-h-screen bg-[#121f28] overflow-x-hidden'>
+          <button className='text-3xl text-orange-600 pl-77 pt-10' onClick={()=>navigate("/")}>X</button>
           <form className='text-lg ml-10 pt-30 text-white'>
             <div >
               <input className=' focus:outline-none' type="text" placeholder='Name' />

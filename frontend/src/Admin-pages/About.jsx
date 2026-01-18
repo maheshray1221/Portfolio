@@ -6,7 +6,7 @@ export default function About() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [jobTitle, setJobTitle] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [socialLinks, setSocialLinks] = useState([]);
   const [workfor, setWorkfor] = useState("");
   const [knowsAbout, setKnowsAbout] = useState([]);

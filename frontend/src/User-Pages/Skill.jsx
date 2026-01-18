@@ -136,8 +136,9 @@ export default function Skill() {
               src="/icons8-instagram-48.png"
               alt=""
             />
-            <p className="text-black/60 text-lg lg:text-2xl lg:mt-3 ml-5">maheshray</p>
-            <button className="px-3 py-1 mt-5 rounded-sm lg:px-4 lg:py-2 bg-gray-400 lg:rounded-lg lg:mt-12 ml-5">Follow</button>
+            <p className="text-black/60 text-lg lg:text-2xl lg:mt-3 ml-5">mahesh_ray</p>
+            <button onClick={()=>window.open("https://www.instagram.com/mahesh_ray.0?igsh=Zjlic3lsdGN4NWhk","_blank")}
+             className="px-3 py-1 mt-5 rounded-sm lg:px-4 lg:py-2 bg-gray-400 lg:rounded-lg lg:mt-12 ml-5">Follow</button>
           </div>
           <div className=" rounded-lg w-85 h-40 mt-5 lg:h-full  lg:mt-0 lg:w-[31%] lg:rounded-xl bg-[#f3f4f6]">
             <img
@@ -145,8 +146,9 @@ export default function Skill() {
               src="/linkedin.png"
               alt=""
             />
-            <p className="text-black/60 text-lg lg:text-2xl lg:mt-3 ml-5">maheshray</p>
-            <button className="px-3 py-1 mt-5 rounded-sm lg:px-4 lg:py-2 bg-gray-400 lg:rounded-lg lg:mt-12 ml-5">Follow</button>
+            <p className="text-black/60 text-lg lg:text-2xl lg:mt-3 ml-5">mahesh-ray</p>
+            <button onClick={()=>window.open("https://www.linkedin.com/in/mahesh-ray-871194331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app")} 
+            className="px-3 py-1 mt-5 rounded-sm lg:px-4 lg:py-2 bg-gray-400 lg:rounded-lg lg:mt-12 ml-5">Follow</button>
           </div>
           <div className="w-85 h-40 rounded-lg mt-5 lg:h-full lg:mt-0 lg:w-[31%] lg:rounded-xl bg-[#f3f4f6] ">
             <img
@@ -155,7 +157,8 @@ export default function Skill() {
               alt=""
             />
             <p className="text-black/60 text-lg lg:text-2xl lg:mt-3 ml-5">maheshray</p>
-            <button className="px-3 py-1 mt-5 rounded-sm lg:px-4 lg:py-2 bg-gray-400 lg:rounded-lg lg:mt-12 ml-5">Follow</button>
+            <button onClick={()=>window.open("https://github.com/maheshray1221")}
+             className="coursor-pointer px-3 py-1 mt-5 rounded-sm lg:px-4 lg:py-2 bg-gray-400 lg:rounded-lg lg:mt-12 ml-5">Follow</button>
           </div>
         </div>
       </div>

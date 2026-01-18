@@ -23,9 +23,9 @@ export const PortfolioProvider = ({ children }) => {
   const getAbout = async () => {
     try {
       let res = await client.get("/getAbout", { withCredentials: true });
-      if (res.status === 200) {
-        console.log(res.data);
-      }
+      // if (res.status === 200) {
+      //   console.log(res.data);
+      // }
       return res.data;
     } catch (err) {
       throw err;
