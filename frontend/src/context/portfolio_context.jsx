@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { client } from "../utils/Client.js";
+import { Client } from "../utils/Client.js";
 
 export const PortfolioContext = createContext({});
 
@@ -7,7 +7,7 @@ export const PortfolioProvider = ({ children }) => {
   // About
   const handleCreateAbout = async (FormData) => {
     try {
-      const res = await client.post("/createAbout", FormData, {
+      const res = await Client.post("/createAbout", FormData, {
         withCredentials: true,
       });
 
@@ -22,7 +22,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const getAbout = async () => {
     try {
-      let res = await client.get("/getAbout", { withCredentials: true });
+      let res = await Client.get("/getAbout", { withCredentials: true });
       // if (res.status === 200) {
       //   console.log(res.data);
       // }
@@ -34,7 +34,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const updateAbout = async (id, FormData) => {
     try {
-      let res = await client.put(`/updateAbout/${id}`, FormData, {
+      let res = await Client.put(`/updateAbout/${id}`, FormData, {
         withCredentials: true,
       });
 
@@ -68,7 +68,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const getSkill = async () => {
     try {
-      const res = await client.get("/getSkill", { withCredentials: true });
+      const res = await Client.get("/getSkill", { withCredentials: true });
       console.log(res.data);
       return res.data;
     } catch (error) {
@@ -78,7 +78,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const updateSkill = async (id, skill) => {
     try {
-      const res = await client.put(`/updateSkill/${id}`, skill, {
+      const res = await Client.put(`/updateSkill/${id}`, skill, {
         withCredentials: true,
       });
       console.log(res);
@@ -91,7 +91,7 @@ export const PortfolioProvider = ({ children }) => {
   // Project
   const createProject = async (FormData) => {
     try {
-      const res = await client.post("/createProject", FormData, {
+      const res = await Client.post("/createProject", FormData, {
         withCredentials: true,
       });
 
@@ -106,7 +106,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const getProject = async () => {
     try {
-      const res = await client.get("/getProject", { withCredentials: true });
+      const res = await Client.get("/getProject", { withCredentials: true });
       console.log(res.data);
       return res.data;
     } catch (error) {
@@ -116,7 +116,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const updateProject = async (id, FormData) => {
     try {
-      const res = await client.put(`/updateProject/${id}`, FormData, {
+      const res = await Client.put(`/updateProject/${id}`, FormData, {
         withCredentials: true,
       });
       console.log(res.data);
@@ -129,7 +129,7 @@ export const PortfolioProvider = ({ children }) => {
   // Experience
   const createExperience = async (FormData) => {
     try {
-      const res = await client.post("/createExperience", FormData, {
+      const res = await Client.post("/createExperience", FormData, {
         withCredentials: true,
       });
       console.log(res.data);
@@ -141,7 +141,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const getExperience = async () => {
     try {
-      const res = await client.get("/getExperience", { withCredentials: true });
+      const res = await Client.get("/getExperience", { withCredentials: true });
       console.log(res.data);
       return res.data;
     } catch (error) {
@@ -151,7 +151,7 @@ export const PortfolioProvider = ({ children }) => {
 
   const updateExperience = async (id, FormData) => {
     try {
-      const res = await client.put(`/updateExperience/${id}`, FormData, {
+      const res = await Client.put(`/updateExperience/${id}`, FormData, {
         withCredentials: true,
       });
       console.log(res.data);

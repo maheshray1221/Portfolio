@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
-import { client } from "../utils/Client.js";
+import { Client } from "../utils/Client.js";
 
 export const AdminContext = createContext({})
 
@@ -13,7 +13,7 @@ export const AdminProvider = ({ children }) => {
     useEffect(() => {
         async () => {
             try {
-                const res = await client.get("/check-auth", {
+                const res = await Client.get("/check-auth", {
                     withCredentials: true
                 })
 
@@ -30,7 +30,7 @@ export const AdminProvider = ({ children }) => {
     // admin register
     const registerAdmin = async (email, password, username) => {
         try {
-            const request = await client.post("/register-admin", {
+            const request = await Client.post("/register-admin", {
                 email,
                 username,
                 password
@@ -46,7 +46,7 @@ export const AdminProvider = ({ children }) => {
 
     const loginAdmin = async (username, password) => {
         try {
-            const request = await client.post("/login-admin", {
+            const request = await Client.post("/login-admin", {
                 username,
                 password
             }, { withCredentials: true })
