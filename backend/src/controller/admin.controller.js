@@ -157,7 +157,7 @@ const createAbout = asyncHandler(async (req, res) => {
     const about = await About.create({
         name,
         jobTitle,
-        imageUrl: req.file.path,
+        imageUrl: profileImage.secure_url,
         SocialLinks,
         workfor,
         knowsAbout,
